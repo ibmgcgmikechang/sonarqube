@@ -1,0 +1,15 @@
+https://github.com/Oteemo/charts/tree/master/charts/sonarqube
+
+oc new-project sonarqube
+oc adm policy add-scc-to-user privileged system:serviceaccount:sonarqube:default
+oc adm policy add-scc-to-user privileged system:serviceaccount:sonarqube:builder
+oc adm policy add-scc-to-user privileged system:serviceaccount:sonarqube:deployer
+oc adm policy add-scc-to-group privileged system:serviceaccounts:sonarqube
+helm repo add oteemocharts https://oteemo.github.io/charts
+helm repo list
+helm inspect values oteemocharts/sonarqube > myvalues.yaml
+helm install sonarqube --namespace sonarqube --values myvalues.yaml oteemocharts/sonarqube
+oc expose svc/sonarqube-sonarqube
+
+Open an browser and access the URL and login as admin with default password
+default usr/pwd  = admin/admin
